@@ -4,7 +4,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-
     sql.add_comment("You are the best!")
     sql.add_comment("It has been good to know you!")
     sql.add_comment("Those are some fancy pants!")
@@ -15,17 +14,46 @@ def index():
 
     return render_template('index.html', affirmations = affirmations)
 
+
+def fetch_comments():
+    pass
+
+
+# TODO: make sure user has permissions
 @app.route('/manage')
 def manage():
-    return render_template('manage.html')
+
+    affirmations = sql.get_comments()
+    return render_template('manage.html', affirmations = affirmations)
+
+
+# TODO: make sure user has permissions
+def update_comment_status():
+    pass
+
+
+# TODO: make sure user has permissions
+def delete_comment():
+    pass
+
 
 @app.route('/add')
 def add():
     return render_template('add.html')
 
+
+@app.route('/add_affirmatoin')
+def add_affirmation():
+    sql.add_comment("You are the best!")
+    return render_template('add.html')
+
+
 @app.route('/approval')
 def approval():
-    return render_template('approve.html')
+
+    affirmations = sql.get_comments()
+
+    return render_template('approve.html', affirmations = affirmations)
 
 
 if __name__ == '__main__':
@@ -37,6 +65,4 @@ if __name__ == '__main__':
     sql.create_comments_table()
 
     app.run()
-
-
 
