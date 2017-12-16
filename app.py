@@ -5,9 +5,15 @@ app = Flask(__name__)
 @app.route('/')
 def index():
 
-    sql_interface.get_comments(1)
+    sql.add_comment("You are the best!")
+    sql.add_comment("It has been good to know you!")
+    sql.add_comment("Those are some fancy pants!")
 
-    return render_template('index.html')
+    affirmations = sql.get_comments()
+
+    #print(affirmations)
+
+    return render_template('index.html', affirmations = affirmations)
 
 @app.route('/manage')
 def manage():
@@ -26,9 +32,9 @@ if __name__ == '__main__':
     database = 'test.db'
  
     # create a database connection
-    conn = sql_interface.create_connection(database)
+    sql = sql_interface.SQL()
 
-    sql_interface.create_comments_table()
+    sql.create_comments_table()
 
     app.run()
 
