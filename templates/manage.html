@@ -4,40 +4,52 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Example of Bootstrap 3 Carousel</title>
+		<title>Manage Comments</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
 	<body>
-		{% for affirmation in affirmations %}
-			<div class="item">
-			<h3>
-				Comment: {{ affirmation.comment }} ,
-				<input class="checkbox" id="{{ affirmation.id }}" type="checkbox" Approved: {% if affirmation.approved == 1 %} checked {% endif %}
-			</h3>
-			</div>
-		{% endfor %}
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th scope="col">Comment</th>
+					<th scope="col">Allowed</th>
+					<th scope="col">Delete Comment</th>
+				</tr>
+			</thead>
+			<tbody>
+
+				{% for affirmation in affirmations %}
+					<tr>
+						<th scope="row">{{ affirmation.comment }}</th>
+						<td><input class="checkbox" id="{{ affirmation.id }}" type="checkbox" Approved: {% if affirmation.approved == 1 %} checked {% endif %}></td>
+						<td><button>Delete</button>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
 	</body>
 
 	<script>
-		$(".checkbox").change(function()
-		{
-			if ($(this).prop('checked'))
-				msg_data = { "id" : $(this).attr("id") ,  "new_status": 1}
-			else
-				msg_data = { "id" : $(this).attr("id") ,  "new_status": 0}
+$(".checkbox").change(function()
+	{
+	if ($(this).prop('checked'))
+		msg_data = { "id" : $(this).attr("id") ,  "new_status": 1}
+	else
+		msg_data = { "id" : $(this).attr("id") ,  "new_status": 0}
 
-			$.ajax(
+	$.ajax(
+		{
+			data: msg_data,
+			method: "POST",
+			url: '/update_comment_status',
+			success: function(data)
 			{
-				data: msg_data,
-				method: "POST",
-				url: '/update_comment_status',
-				success: function(data)
-				{
-					console.log("success!")
-				}
-			});
+				console.log("success!")
+			}
 		});
+	});
 	</script>
 </html>

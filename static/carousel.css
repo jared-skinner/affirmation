@@ -1,0 +1,34 @@
+
+html,
+body
+{
+	height: 100%;
+}
+
+.carousel_container
+{
+	width: 100%;
+	margin:0;
+	height: 75%;
+	margin-top:25%;
+	background-color: #748c89;
+}
+
+#myCarousel
+{
+	height: 100%
+}
+
+.text_container
+{
+	margin: 0 auto;
+	margin-top: 50px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 70%;
+	height: 100%;
+	text-align: center;
+}
+
+
+

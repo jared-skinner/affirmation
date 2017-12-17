@@ -5,11 +5,15 @@
 		{% for affirmation in affirmations %}
 			{% if loop.index == 1 %}
 				<div class="item active">
-					<h1> {{ affirmation.comment }} </h1>
+					<div class="text_container">
+						<h1> {{ affirmation.comment }} </h1>
+					</div>
 				</div>
 			{% else %}
 				<div class="item">
-					<h1> {{ affirmation.comment }} </h1>
+					<div class="text_container">
+						<h1> {{ affirmation.comment }} </h1>
+					</div>
 				</div>
 			{% endif %}
 		{% endfor %}
