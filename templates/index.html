@@ -25,24 +25,36 @@
 		</style>
 	</head>
 	<body>
-		<div class="bs-example">
+		<div id="carousel_container" class="bs-example">
 			<div id="myCarousel" class="carousel slide" data-ride="carousel">
 				</ol>   
-				<!-- Wrapper for carousel items -->
 				<div class="carousel-inner">
-					{% for affirmation in affirmations %}
-						{% if loop.index == 1 %}
-							<div class="item active">
-								<h1> {{ affirmation }} </h1>
-							</div>
-						{% else %}
-							<div class="item">
-								<h1> {{ affirmation }} </h1>
-							</div>
-						{% endif %}
-					{% endfor %}
+					<!-- this is filled in with first ajax call -->
 				</div>
 			</div>
 		</div>
 	</body>
+
+	<script>
+		function executeQuery()
+		{
+			$.ajax(
+			{
+				url: '/fetch_comments',
+				success: function(data)
+				{
+					//console.log(data);
+					$(".carousel-inner").html(data);
+					// do something with the return value here if you like
+				}
+			});
+			setTimeout(executeQuery, 60 * 60 * 30); // you could choose not to continue on failure...
+		}
+
+		$(document).ready(function()
+		{
+			// run the first time; all subsequent calls will take care of themselves
+			executeQuery();
+		});
+	</script>
 </html>

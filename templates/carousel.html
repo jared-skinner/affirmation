@@ -1,0 +1,17 @@
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+	</ol>   
+	<!-- Wrapper for carousel items -->
+	<div class="carousel-inner">
+		{% for affirmation in affirmations %}
+			{% if loop.index == 1 %}
+				<div class="item active">
+					<h1> {{ affirmation }} </h1>
+				</div>
+			{% else %}
+				<div class="item">
+					<h1> {{ affirmation }} </h1>
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+</div>

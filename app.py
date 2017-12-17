@@ -7,22 +7,18 @@ def index():
     sql.add_comment("You are the best!")
     sql.add_comment("It has been good to know you!")
     sql.add_comment("Those are some fancy pants!")
-
-    affirmations = sql.get_comments()
-
-    #print(affirmations)
-
-    return render_template('index.html', affirmations = affirmations)
+    return render_template('index.html')
 
 
+@app.route('/fetch_comments')
 def fetch_comments():
-    pass
+    affirmations = sql.get_comments()
+    return render_template('carousel.html', affirmations = affirmations)
 
 
 # TODO: make sure user has permissions
 @app.route('/manage')
 def manage():
-
     affirmations = sql.get_comments()
     return render_template('manage.html', affirmations = affirmations)
 
@@ -44,25 +40,20 @@ def add():
 
 @app.route('/add_affirmatoin')
 def add_affirmation():
-    sql.add_comment("You are the best!")
-    return render_template('add.html')
+    if sql.add_comment("You are the best!")
+        return "success"
+    else
+        return "error"
 
 
 @app.route('/approval')
 def approval():
-
     affirmations = sql.get_comments()
-
     return render_template('approve.html', affirmations = affirmations)
 
 
 if __name__ == '__main__':
-    database = 'test.db'
- 
     # create a database connection
     sql = sql_interface.SQL()
-
     sql.create_comments_table()
-
     app.run()
-
