@@ -43,12 +43,13 @@
 				url: '/fetch_comments',
 				success: function(data)
 				{
-					//console.log(data);
+					// update carousel with new items
 					$(".carousel-inner").html(data);
-					// do something with the return value here if you like
 				}
 			});
-			setTimeout(executeQuery, 60 * 60 * 30); // you could choose not to continue on failure...
+
+			// milliseconds, seconds, minutes
+			setTimeout(executeQuery, 10000 * 60 * 30);
 		}
 
 		$(document).ready(function()

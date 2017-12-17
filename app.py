@@ -1,18 +1,19 @@
 import sql_interface
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 app = Flask(__name__)
+
+TRUE = "1"
+FALSE = "0"
+
 
 @app.route('/')
 def index():
-    sql.add_comment("You are the best!")
-    sql.add_comment("It has been good to know you!")
-    sql.add_comment("Those are some fancy pants!")
     return render_template('index.html')
 
 
 @app.route('/fetch_comments')
 def fetch_comments():
-    affirmations = sql.get_comments()
+    affirmations = sql.get_comments(approved = TRUE)
     return render_template('carousel.html', affirmations = affirmations)
 
 
@@ -23,13 +24,21 @@ def manage():
     return render_template('manage.html', affirmations = affirmations)
 
 
-# TODO: make sure user has permissions
+@app.route('/update_comment_status', methods=['POST'])
 def update_comment_status():
-    pass
+    # TODO: make sure user has permissions
+
+    comment_id = request.form['id']
+    new_status = request.form['new_status']
+
+    if sql.update_status(comment_id, new_status):
+        return "success"
+    else:
+        return "error"
 
 
-# TODO: make sure user has permissions
 def delete_comment():
+    # TODO: make sure user has permissions
     pass
 
 
@@ -38,11 +47,13 @@ def add():
     return render_template('add.html')
 
 
-@app.route('/add_affirmatoin')
+@app.route('/add_affirmation', methods=['POST'])
 def add_affirmation():
-    if sql.add_comment("You are the best!")
+    affirmation = request.form['affirmation']
+
+    if sql.add_comment(affirmation):
         return "success"
-    else
+    else:
         return "error"
 
 

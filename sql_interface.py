@@ -21,6 +21,13 @@ class SQL():
         return None
 
 
+    def dict_factory(self, row):
+        d = {}
+        for idx, col in enumerate(self.cur.description):
+            d[col[0]] = row[idx]
+        return d
+
+
     def get_comments(self, approved = "ALL"):
         """
         Query tasks by priority
@@ -30,11 +37,11 @@ class SQL():
         """
 
         if approved == "ALL":
-            query = "SELECT comment FROM comments;"
-        elif approved == "TRUE" or approved == "FALSE":
+            query = "SELECT * FROM comments;"
+        elif approved == "0" or approved == "1":
             query = "SELECT * FROM comments WHERE approved = " + approved + ";"
         else:
-            return
+            return False
 
         self.cur.execute(query)
 
@@ -42,9 +49,18 @@ class SQL():
 
         comments = []
         for row in rows:
-            comments.append(row[0])
+            comments.append(self.dict_factory(row))
 
         return comments
+
+
+    def update_status(self, id, status):
+        query = 'UPDATE comments SET approved = ' + status + ' where id = ' + id + ';'
+
+        try:
+            self.cur.execute(query)
+        except Error as e:
+            print(e)
 
 
     def create_comments_table(self):
